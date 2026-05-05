@@ -30,7 +30,7 @@ export default function Home() {
             A Center for <span className="text-amber-400 font-serif italic normal-case">Faith</span>, <span className="text-amber-400 font-serif italic normal-case">Knowledge</span>, and <span className="text-amber-400 font-serif italic normal-case">Service</span>
           </h1>
           <p className="text-lg md:text-xl text-primary-50 max-w-2xl mx-auto mb-10 drop-shadow">
-            Providing a welcoming space for worship, education, and community support in the heart of London.
+            Providing a welcoming space for worship, education, and community support in the heart of Ellesmere Port.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/events" className="px-8 py-3.5 rounded-full bg-primary-800 hover:bg-primary-700 text-white text-xs font-bold uppercase tracking-widest transition shadow-lg w-full sm:w-auto text-center">
@@ -95,7 +95,7 @@ export default function Home() {
                 Message from the Imam
               </h2>
               <p className="text-xl md:text-2xl font-serif italic text-slate-800 mb-8 leading-relaxed">
-                "Assalamu Alaikum. Welcome to the London Grand Mosque. Our mission is to serve the religious and social needs of the Muslim community while fostering understanding and harmony with our wider society."
+                "Assalamu Alaikum. Welcome to the Ellesmere Port Mosque. Our mission is to serve the religious and social needs of the Muslim community while fostering understanding and harmony with our wider society."
               </p>
               <p className="text-sm text-slate-600 mb-8 leading-relaxed">
                 Under the guidance of Imam Tariq Rahman, we offer extensive educational programs, youth activities, and community services. We strive to be a place of spiritual growth where the prophetic example is lived and shared.

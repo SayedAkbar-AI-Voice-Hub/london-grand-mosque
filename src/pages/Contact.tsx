@@ -25,7 +25,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-1">Visit Us</h4>
-                  <p className="text-slate-600 text-sm leading-relaxed">123 Whitechapel Road<br />London, E1 1AA<br />United Kingdom</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">1 Chester Road<br />Ellesmere Port, CH65 1AA<br />United Kingdom</p>
                 </div>
               </div>
 
@@ -35,7 +35,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-1">Call Us</h4>
-                  <p className="text-slate-600 font-mono text-sm leading-relaxed mb-1">+44 20 7123 4567</p>
+                  <p className="text-slate-600 font-mono text-sm leading-relaxed mb-1">+44 151 123 4567</p>
                   <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest mt-1">Available 9 AM - 5 PM (Mon - Fri)</p>
                 </div>
               </div>
@@ -46,7 +46,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold uppercase tracking-widest text-slate-900 mb-1">Email Us</h4>
-                  <p className="text-slate-600 font-mono text-sm leading-relaxed">info@londongrandmosque.org<br/>imam@londongrandmosque.org</p>
+                  <p className="text-slate-600 font-mono text-sm leading-relaxed">info@ellesmereportmosque.org<br/>imam@ellesmereportmosque.org</p>
                 </div>
               </div>
 

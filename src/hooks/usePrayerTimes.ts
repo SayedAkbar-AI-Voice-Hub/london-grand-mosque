@@ -22,7 +22,7 @@ export function usePrayerTimes() {
       try {
         setLoading(true);
         // Today's exact times
-        const todayRes = await fetch("https://api.aladhan.com/v1/timingsByCity?city=London&country=UK&method=2");
+        const todayRes = await fetch("https://api.aladhan.com/v1/timingsByCity?city=Chester&country=UK&method=2");
         const todayData = await todayRes.json();
         setTimings(todayData.data.timings);
 
@@ -30,7 +30,7 @@ export function usePrayerTimes() {
         const date = new Date();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
-        const calRes = await fetch(`https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=London&country=UK&method=2`);
+        const calRes = await fetch(`https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=Chester&country=UK&method=2`);
         const calData = await calRes.json();
         setCalendar(calData.data);
       } catch (err) {

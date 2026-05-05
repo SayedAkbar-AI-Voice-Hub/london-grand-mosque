@@ -179,7 +179,7 @@ export default function Donate() {
                 </li>
               </ul>
               <div className="mt-8 pt-8 border-t border-white/10 text-[10px] text-slate-400">
-                London Grand Mosque is a registered charity in the UK (Charity Number 1234567). Contact us at donations@londongrandmosque.org for tax gift aid receipts.
+                Ellesmere Port Mosque is a registered charity in the UK (Charity Number 1234567). Contact us at donations@ellesmereportmosque.org for tax gift aid receipts.
               </div>
             </div>
           </div>

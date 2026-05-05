@@ -26,17 +26,17 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center space-x-6">
             <span className="flex items-center">
               <MapPin className="w-3 h-3 mr-2 text-primary-800" />
-              123 Whitechapel Rd, London E1 1AA
+              1 Chester Rd, Ellesmere Port CH65 1AA
             </span>
             <span className="flex items-center">
               <Phone className="w-3 h-3 mr-2 text-primary-800" />
-              +44 20 7123 4567
+              +44 151 123 4567
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
               <Mail className="w-3 h-3 mr-2 text-primary-800" />
-              info@londongrandmosque.org
+              info@ellesmereportmosque.org
             </span>
           </div>
         </div>
@@ -52,7 +52,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <Heart className="w-5 h-5" />
               </div>
               <h1 className="text-xl font-bold tracking-tight text-primary-950 uppercase hidden sm:block">
-                London Grand Mosque
+                Ellesmere Port Mosque
               </h1>
             </Link>
 
@@ -146,9 +146,9 @@ export function Layout({ children }: { children: ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="col-span-1 md:col-span-1 border-r border-slate-200 pr-8">
-              <div className="text-xl font-bold tracking-tight text-primary-950 uppercase mb-4">London Grand Mosque</div>
+              <div className="text-xl font-bold tracking-tight text-primary-950 uppercase mb-4">Ellesmere Port Mosque</div>
               <p className="text-sm text-slate-500 italic">
-                A beacon of light, learning, and community in the heart of London. Welcoming all to the path of peace.
+                A beacon of light, learning, and community in the heart of Ellesmere Port. Welcoming all to the path of peace.
               </p>
             </div>
             <div>
@@ -174,22 +174,22 @@ export function Layout({ children }: { children: ReactNode }) {
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start">
                   <MapPin className="w-4 h-4 mr-3 text-primary-800 shrink-0 mt-0.5" />
-                  <span>123 Whitechapel Rd,<br/>London E1 1AA, UK</span>
+                  <span>1 Chester Rd,<br/>Ellesmere Port CH65 1AA, UK</span>
                 </li>
                 <li className="flex items-center mt-2">
                   <Phone className="w-4 h-4 mr-3 text-primary-800 shrink-0" />
-                  <span>+44 20 7123 4567</span>
+                  <span>+44 151 123 4567</span>
                 </li>
                 <li className="flex items-center mt-2">
                   <Mail className="w-4 h-4 mr-3 text-primary-800 shrink-0" />
-                  <span>info@londongrandmosque.org</span>
+                  <span>info@ellesmereportmosque.org</span>
                 </li>
               </ul>
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-[10px] text-slate-400 font-medium uppercase tracking-tighter">
-              &copy; {new Date().getFullYear()} London Grand Mosque • Registered Charity No. 1234567
+              &copy; {new Date().getFullYear()} Ellesmere Port Mosque • Registered Charity No. 1234567
             </p>
             <div className="flex gap-6">
               <span className="text-[10px] text-primary-800 font-bold uppercase tracking-widest cursor-pointer hover:text-primary-600">Instagram</span>

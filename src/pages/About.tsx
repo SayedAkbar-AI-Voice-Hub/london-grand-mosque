@@ -7,7 +7,7 @@ export default function About() {
       <div className="bg-primary-900 py-16 text-white text-center">
         <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-4">About the Mosque & Our Imam</h1>
         <p className="text-primary-100 max-w-2xl mx-auto text-sm font-serif italic px-4">
-          Established in 1995, the London Grand Mosque is a beacon of Islamic learning, prayer, and community service.
+          Established in 1995, the Ellesmere Port Mosque is a beacon of Islamic learning, prayer, and community service.
         </p>
       </div>
 
@@ -32,7 +32,7 @@ export default function About() {
             <h2 className="text-[10px] tracking-widest text-amber-600 uppercase font-bold mb-4">Our Leadership</h2>
             <h3 className="text-2xl font-bold uppercase tracking-tight text-slate-900 mb-6">Meet Imam Tariq Rahman</h3>
             <p className="text-sm font-serif italic text-slate-600 mb-6 leading-relaxed">
-              Serving the London Grand Mosque since 2012, Imam Tariq brings a wealth of traditional knowledge combined with a deep understanding of the contemporary challenges faced by Muslims in the West. 
+              Serving the Ellesmere Port Mosque since 2012, Imam Tariq brings a wealth of traditional knowledge combined with a deep understanding of the contemporary challenges faced by Muslims in the West.
             </p>
             <p className="text-sm text-slate-600 mb-8 leading-relaxed">
               With over 15 years of pastoral experience, he is dedicated to youth empowerment, interfaith dialogue, and providing accessible Islamic education. He frequently hosts the Friday sermons, offers private counseling, and teaches the weekly Tafsir classes.
@@ -40,7 +40,7 @@ export default function About() {
             <div className="grid grid-cols-2 gap-6 pb-6 border-b border-slate-100">
                <div>
                   <div className="text-2xl font-mono font-medium text-primary-800 mb-1">15+</div>
-                  <div className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Years Serving London</div>
+                  <div className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Years Serving Our Community</div>
                </div>
                <div>
                   <div className="text-2xl font-mono font-medium text-primary-800 mb-1">500+</div>
