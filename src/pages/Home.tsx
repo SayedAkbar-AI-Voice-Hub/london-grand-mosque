@@ -77,43 +77,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Intro/Imam Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5 relative">
-              <div className="absolute inset-0 bg-primary-800 rounded-3xl transform translate-x-4 translate-y-4"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1519817650390-2c24b47133ed?q=80&w=800&auto=format&fit=crop" 
-                alt="Community learning" 
-                className="relative rounded-3xl shadow-xl w-full h-[500px] object-cover"
-              />
-            </div>
-            
-            <div className="lg:col-span-7 bg-white p-10 md:p-14 rounded-3xl border border-slate-100 shadow-sm">
-              <h2 className="text-xs font-bold uppercase tracking-widest text-primary-800 mb-4">
-                Message from the Imam
-              </h2>
-              <p className="text-xl md:text-2xl font-serif italic text-slate-800 mb-8 leading-relaxed">
-                "Assalamu Alaikum. Welcome to the Ellesmere Port Mosque. Our mission is to serve the religious and social needs of the Muslim community while fostering understanding and harmony with our wider society."
-              </p>
-              <p className="text-sm text-slate-600 mb-8 leading-relaxed">
-                Under the guidance of Imam Tariq Rahman, we offer extensive educational programs, youth activities, and community services. We strive to be a place of spiritual growth where the prophetic example is lived and shared.
-              </p>
-              <Link to="/about" className="inline-flex items-center gap-4 group">
-                <div className="w-14 h-14 rounded-full border-2 border-slate-200 overflow-hidden">
-                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="Imam" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <span className="block font-bold text-slate-900 group-hover:text-primary-800 transition">Imam Tariq Rahman</span>
-                  <span className="block text-[10px] uppercase tracking-widest text-slate-500">Head Scholar & Director</span>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Events Quick View */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
