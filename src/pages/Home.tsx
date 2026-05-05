@@ -1,12 +1,20 @@
 import { MOCK_EVENTS } from "../data/mockData";
-import { Clock, Calendar as CalendarIcon, ArrowRight, Video } from "lucide-react";
+import { Clock, Calendar as CalendarIcon, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
-import { usePrayerTimes, formatTime12h } from "../hooks/usePrayerTimes";
+import { usePrayerTimes } from "../hooks/usePrayerTimes";
+
+const DISPLAY_PRAYERS = [
+  { key: "Fajr",    jamatKey: "FajrJamat",  label: "Fajr" },
+  { key: "Sunrise", jamatKey: null,          label: "Sunrise" },
+  { key: "Dhuhr",   jamatKey: "DhuhrJamat", label: "Zuhr" },
+  { key: "Asr",     jamatKey: "AsrJamat",   label: "Asr" },
+  { key: "Maghrib", jamatKey: null,          label: "Maghrib" },
+  { key: "Isha",    jamatKey: "IshaJamat",  label: "Isha" },
+] as const;
 
 export default function Home() {
   const { timings, loading } = usePrayerTimes();
-  const displayPrayers = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
   return (
     <div className="flex flex-col w-full">
@@ -14,8 +22,8 @@ export default function Home() {
       <section className="relative h-[650px] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
           <img 
-            src="https://images.unsplash.com/photo-1542816417-0983c9c9ad53?q=80&w=2560&auto=format&fit=crop" 
-            alt="Beautiful Mosque interior" 
+            src="https://images.unsplash.com/photo-1743450675048-03e0c6b13720?q=80&w=2560&auto=format&fit=crop"
+            alt="Eid congregation prayers at mosque"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-primary-950/70 mix-blend-multiply"></div>
@@ -56,18 +64,27 @@ export default function Home() {
               <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition" />
             </Link>
           </div>
-          <div className="p-6 lg:w-2/3 grid grid-cols-2 lg:grid-cols-4 gap-3 text-white">
+          <div className="p-6 lg:w-2/3 grid grid-cols-2 lg:grid-cols-3 gap-3 text-white">
             {loading ? (
               <div className="col-span-full flex items-center justify-center py-8 text-white/50 text-xs font-mono">
-                Loading authentic prayer times...
+                Loading prayer times...
               </div>
             ) : timings ? (
-              displayPrayers.map((name) => (
-                <div key={name} className="flex flex-col justify-center p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-70 mb-2">{name}</span>
-                  <span className="text-lg font-mono font-medium">{formatTime12h(timings[name])}</span>
-                </div>
-              ))
+              DISPLAY_PRAYERS.map(({ key, jamatKey, label }) => {
+                const beg = timings[key as keyof typeof timings] as string;
+                const jamat = jamatKey ? timings[jamatKey as keyof typeof timings] as string | null : null;
+                return (
+                  <div key={key} className="flex flex-col justify-center p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">{label}</span>
+                    <span className="text-base font-mono font-semibold">{beg}</span>
+                    {jamat && (
+                      <span className="text-[10px] text-amber-400 font-bold mt-1 font-mono">
+                        Jamāt {jamat}
+                      </span>
+                    )}
+                  </div>
+                );
+              })
             ) : (
               <div className="col-span-full flex items-center justify-center py-8 text-white/50 text-xs font-mono">
                 Unable to load prayer times.

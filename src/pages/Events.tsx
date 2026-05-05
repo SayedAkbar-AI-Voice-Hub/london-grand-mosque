@@ -1,11 +1,34 @@
-import { MOCK_EVENTS } from "../data/mockData";
+import { MOCK_EVENTS, MAY_2026_TIMETABLE, formatPdfTime } from "../data/mockData";
 import { Calendar as CalendarIcon, Clock, MapPin, Users } from "lucide-react";
 import { format } from "date-fns";
-import { usePrayerTimes, formatTime12h } from "../hooks/usePrayerTimes";
+
+const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+
+function fmtAm(t: string) { return formatPdfTime(t, false); }
+function fmtPm(t: string) { return formatPdfTime(t, true); }
+
+function TimeCell({ beg, jamat, begFn, jamatFn }: {
+  beg: string;
+  jamat: string | null;
+  begFn: (t: string) => string;
+  jamatFn: (t: string) => string;
+}) {
+  return (
+    <td className="px-3 py-3 whitespace-nowrap">
+      <span className="font-mono text-slate-700 text-xs">{begFn(beg)}</span>
+      {jamat && (
+        <span className="block font-mono text-amber-600 font-bold text-[10px] mt-0.5">
+          {jamatFn(jamat)}
+        </span>
+      )}
+    </td>
+  );
+}
 
 export default function Events() {
-  const { calendar, loading } = usePrayerTimes();
-  
+  const today = new Date();
+  const todayDate = today.getMonth() === 4 && today.getFullYear() === 2026 ? today.getDate() : -1;
+
   return (
     <div className="flex flex-col w-full bg-slate-50 min-h-screen">
       {/* Header */}
@@ -17,50 +40,76 @@ export default function Events() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-        
-        {/* Full Prayer Timetable Mockup */}
+
+        {/* Prayer Timetable */}
         <section className="mb-20">
-          <h2 className="text-xs tracking-widest uppercase font-bold text-primary-900 mb-6 flex items-center">
-            <Clock className="w-4 h-4 mr-3 text-amber-500" /> 
-            Monthly Prayer Timetable
-          </h2>
-          <div className="overflow-x-auto bg-white rounded-3xl shadow-sm border border-slate-100 p-2">
-            <table className="min-w-full divide-y divide-slate-100 text-sm">
-              <thead className="bg-slate-50 rounded-2xl overflow-hidden">
-                <tr>
-                  <th className="px-6 py-4 text-left text-[10px] font-bold text-primary-900 tracking-widest uppercase">Date</th>
-                  {['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].map(prayer => (
-                    <th key={prayer} className="px-6 py-4 text-left text-[10px] font-bold text-primary-900 tracking-widest uppercase">
-                      {prayer}
-                    </th>
-                  ))}
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-6 gap-3">
+            <h2 className="text-xs tracking-widest uppercase font-bold text-primary-900 flex items-center">
+              <Clock className="w-4 h-4 mr-3 text-amber-500" />
+              May 2026 — Prayer Timetable
+            </h2>
+            <div className="flex gap-5 text-[10px] font-bold uppercase tracking-widest">
+              <span className="text-slate-500">Normal = Begin time</span>
+              <span className="text-amber-600">Amber = Jamāt time</span>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto bg-white rounded-3xl shadow-sm border border-slate-100">
+            <table className="min-w-full text-xs">
+              <thead>
+                <tr className="bg-primary-900 text-white">
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px] rounded-tl-3xl">Date</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Day</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Fajr</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Sunrise</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Zuhr</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Asr</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px]">Maghrib</th>
+                  <th className="px-3 py-3 text-left font-bold tracking-widest uppercase text-[10px] rounded-tr-3xl">Isha</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-slate-50 font-mono">
-                {loading ? (
-                  <tr>
-                    <td colSpan={7} className="px-6 py-8 text-center text-slate-500 font-mono text-xs">Loading authentic calendar...</td>
-                  </tr>
-                ) : (
-                  calendar.map((dayData, i) => (
-                    <tr key={i} className="hover:bg-slate-50">
-                      <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-900">
-                        {dayData.date.readable}
+              <tbody className="divide-y divide-slate-50">
+                {MAY_2026_TIMETABLE.map((day) => {
+                  const dayOfWeek = new Date(2026, 4, day.date).getDay();
+                  const isFriday = dayOfWeek === 5;
+                  const isToday = day.date === todayDate;
+                  return (
+                    <tr
+                      key={day.date}
+                      className={
+                        isToday
+                          ? "bg-primary-50 border-l-4 border-primary-600"
+                          : isFriday
+                          ? "bg-amber-50/60 hover:bg-amber-50"
+                          : "hover:bg-slate-50"
+                      }
+                    >
+                      <td className="px-3 py-3 font-bold text-slate-900 whitespace-nowrap">
+                        {isToday ? (
+                          <span className="inline-flex items-center gap-1.5">
+                            {day.date}
+                            <span className="text-[9px] bg-primary-700 text-white px-1.5 py-0.5 rounded-full uppercase font-bold tracking-wider">Today</span>
+                          </span>
+                        ) : day.date}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Fajr)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Sunrise)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Dhuhr)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Asr)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Maghrib)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600">{formatTime12h(dayData.timings.Isha)}</td>
+                      <td className={`px-3 py-3 font-bold whitespace-nowrap ${isFriday ? "text-amber-700" : "text-slate-500"}`}>
+                        {DAYS[dayOfWeek]}
+                        {isFriday && <span className="ml-1 text-[9px] uppercase tracking-wider">(Jumu'ah)</span>}
+                      </td>
+                      <TimeCell beg={day.fajrBeg}  jamat={day.fajrJamat}  begFn={fmtAm} jamatFn={fmtAm} />
+                      <td className="px-3 py-3 font-mono text-slate-500 whitespace-nowrap">{fmtAm(day.sunrise)}</td>
+                      <TimeCell beg={day.zuhrBeg}  jamat={day.zuhrJamat}  begFn={fmtPm} jamatFn={fmtPm} />
+                      <TimeCell beg={day.asrBeg}   jamat={day.asrHanafi ?? day.asrJamat} begFn={fmtPm} jamatFn={fmtPm} />
+                      <td className="px-3 py-3 font-mono text-slate-700 whitespace-nowrap">{fmtPm(day.maghrib)}</td>
+                      <TimeCell beg={day.ishaBeg}  jamat={day.ishaJamat}  begFn={fmtPm} jamatFn={fmtPm} />
                     </tr>
-                  ))
-                )}
+                  );
+                })}
               </tbody>
             </table>
           </div>
-          <p className="text-slate-500 text-sm mt-4 italic">
-            * Jummah prayers are held every Friday at 01:15 PM and 02:15 PM in two congregations.
+          <p className="text-slate-500 text-xs mt-4 italic px-1">
+            * Jumu'ah (Friday) prayers: 1st congregation 1:00 PM · 2nd congregation 2:00 PM. Amber times indicate Jamāt (congregation start). Asr amber time shows Hanafi calculation where shown.
           </p>
         </section>
 

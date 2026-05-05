@@ -26,17 +26,17 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="flex items-center space-x-6">
             <span className="flex items-center">
               <MapPin className="w-3 h-3 mr-2 text-primary-800" />
-              1 Chester Rd, Ellesmere Port CH65 1AA
+              82-84 Station Road, Ellesmere Port CH65 4DB
             </span>
             <span className="flex items-center">
               <Phone className="w-3 h-3 mr-2 text-primary-800" />
-              +44 151 123 4567
+              07968 378 481
             </span>
           </div>
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
               <Mail className="w-3 h-3 mr-2 text-primary-800" />
-              info@ellesmereportmosque.org
+              masjidellesmereport@gmail.com
             </span>
           </div>
         </div>
@@ -174,15 +174,15 @@ export function Layout({ children }: { children: ReactNode }) {
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start">
                   <MapPin className="w-4 h-4 mr-3 text-primary-800 shrink-0 mt-0.5" />
-                  <span>1 Chester Rd,<br/>Ellesmere Port CH65 1AA, UK</span>
+                  <span>82-84 Station Road,<br/>Ellesmere Port CH65 4DB, UK</span>
                 </li>
                 <li className="flex items-center mt-2">
                   <Phone className="w-4 h-4 mr-3 text-primary-800 shrink-0" />
-                  <span>+44 151 123 4567</span>
+                  <span>07968 378 481</span>
                 </li>
                 <li className="flex items-center mt-2">
                   <Mail className="w-4 h-4 mr-3 text-primary-800 shrink-0" />
-                  <span>info@ellesmereportmosque.org</span>
+                  <span>masjidellesmereport@gmail.com</span>
                 </li>
               </ul>
             </div>
