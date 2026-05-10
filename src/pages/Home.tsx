@@ -1,4 +1,5 @@
-import { MOCK_EVENTS } from "../data/mockData";
+import { useState, useEffect } from "react";
+import { eventsApi } from "../lib/api";
 import { Clock, Calendar as CalendarIcon, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
@@ -15,13 +16,18 @@ const DISPLAY_PRAYERS = [
 
 export default function Home() {
   const { timings, loading } = usePrayerTimes();
+  const [events, setEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    eventsApi.list().then(setEvents).catch(() => {});
+  }, []);
 
   return (
     <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section className="relative h-[650px] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-          <img 
+          <img
             src="https://images.unsplash.com/photo-1743450675048-03e0c6b13720?q=80&w=2560&auto=format&fit=crop"
             alt="Eid congregation prayers at mosque"
             className="w-full h-full object-cover"
@@ -29,7 +35,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-primary-950/70 mix-blend-multiply"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-transparent to-transparent"></div>
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <span className="inline-block px-4 py-1.5 rounded-full bg-slate-900/40 border border-white/20 text-white text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-sm shadow-xl">
             Welcome to Your Community
@@ -60,7 +66,7 @@ export default function Home() {
               Today's Prayers • {format(new Date(), "MMM do")}
             </h2>
             <Link to="/events" className="inline-flex items-center text-amber-400 hover:text-amber-300 font-bold transition group text-xs uppercase tracking-widest mt-auto pt-6">
-              View Full Calendar 
+              View Full Calendar
               <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition" />
             </Link>
           </div>
@@ -108,7 +114,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {MOCK_EVENTS.map(event => (
+            {events.slice(0, 3).map((event: any) => (
               <div key={event.id} className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col p-4">
                 <div className="h-48 rounded-2xl overflow-hidden mb-4 relative">
                   <div className="absolute inset-0 bg-primary-950/20 group-hover:bg-transparent transition-colors z-10"></div>
@@ -126,10 +132,14 @@ export default function Home() {
                 </div>
               </div>
             ))}
+            {events.length === 0 && (
+              <div className="col-span-full text-center py-12 text-slate-400 text-sm">
+                No upcoming events at this time.
+              </div>
+            )}
           </div>
         </div>
       </section>
-
     </div>
   );
 }

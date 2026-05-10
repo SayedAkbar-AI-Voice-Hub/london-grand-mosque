@@ -7,3 +7,7 @@ coverage/
 .env*
 !.env.example
 .vercel
+server/data.db
+server/data.db-wal
+server/data.db-shm
+server/uploads/
