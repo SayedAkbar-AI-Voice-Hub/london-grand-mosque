@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getTodayTimetable, MAY_2026_TIMETABLE, formatPdfTime, type TimetableDay } from "../data/mockData";
+import { getTodayTimetable, TIMETABLES, formatPdfTime, type TimetableDay } from "../data/mockData";
 
 export const formatTime12h = (time24: string) => {
   if (!time24) return "";
@@ -46,6 +46,9 @@ export function usePrayerTimes() {
   const [timings, setTimings] = useState<LocalTimings | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const today = new Date();
+  const monthEntry = TIMETABLES[today.getMonth()];
+
   useEffect(() => {
     const localDay = getTodayTimetable();
     if (localDay) {
@@ -70,5 +73,5 @@ export function usePrayerTimes() {
     }
   }, []);
 
-  return { timings, calendar: MAY_2026_TIMETABLE, loading };
+  return { timings, calendar: monthEntry?.data ?? [], loading };
 }

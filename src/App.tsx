@@ -8,7 +8,6 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
-import News from "./pages/News";
 import Donate from "./pages/Donate";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/admin/Login";
@@ -37,7 +36,6 @@ export default function App() {
           <Route path="/about" element={<Layout><About /></Layout>} />
           <Route path="/services" element={<Layout><Services /></Layout>} />
           <Route path="/events" element={<Layout><Events /></Layout>} />
-          <Route path="/news" element={<Layout><News /></Layout>} />
           <Route path="/gallery" element={<Layout><Gallery /></Layout>} />
           <Route path="/donate" element={<Layout><Donate /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />

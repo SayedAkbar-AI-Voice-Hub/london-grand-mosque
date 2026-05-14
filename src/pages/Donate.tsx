@@ -1,186 +1,189 @@
 import { useState } from "react";
-import { Lock, Heart, CheckCircle2, Loader2, ArrowLeft } from "lucide-react";
+import { CheckCircle2, Copy, Building2, Heart } from "lucide-react";
 import { cn } from "../lib/utils";
 
+const PRESET_AMOUNTS = [3, 5, 10, 15, 20, 30, 50, 100];
+
 export default function Donate() {
-  const [amount, setAmount] = useState<number | null>(50);
+  const [amount, setAmount] = useState<number | null>(20);
   const [customAmount, setCustomAmount] = useState<string>("");
-  const [frequency, setFrequency] = useState<"onetime" | "monthly">("onetime");
-  
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isCustom, setIsCustom] = useState(false);
+  const [giftAid, setGiftAid] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
-  const predefinedAmounts = [25, 50, 100, 250, 500];
+  const finalAmount = isCustom ? parseFloat(customAmount) || 0 : (amount ?? 0);
+  const giftAidBonus = giftAid ? finalAmount * 0.25 : 0;
 
-  const handleProcessPayment = () => {
-    if (!amount && !customAmount) return;
-    setIsProcessing(true);
-    // Simulate real payment delay (Note: To accept real payments you would need Stripe/PayPal keys)
-    setTimeout(() => {
-      setIsProcessing(false);
-      setIsSuccess(true);
-    }, 1500);
-  };
+  function copyToClipboard(text: string, key: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(key);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  }
 
   return (
-    <div className="min-h-screen py-16">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="text-center mb-10">
-          <Heart className="w-12 h-12 text-primary-800 mx-auto mb-4" />
-          <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-slate-900 mb-4">Support Our Mosque</h1>
-          <p className="text-sm font-serif italic text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            "Those who spend their wealth in charity, by night and by day, secretly and publicly, will find their reward with their Lord." (Quran 2:274)
-          </p>
-        </div>
+    <div className="min-h-screen bg-slate-50">
+      {/* Header */}
+      <div className="bg-primary-900 py-16 text-white text-center">
+        <Heart className="w-10 h-10 text-amber-400 mx-auto mb-4" />
+        <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight mb-3">Please Donate Generously</h1>
+        <p className="text-primary-100 max-w-xl mx-auto text-sm px-4">
+          Your donations support Ellesmere Port Masjid and Islamic Centre with running costs, ongoing projects and future projects.
+        </p>
+      </div>
 
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 flex flex-col md:flex-row p-2">
-          
-          {/* Form Side */}
-          <div className="p-8 md:p-10 md:w-2/3">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-primary-900 mb-6 border-b border-slate-100 pb-4">Secure Online Donation</h2>
-            
-            {/* Frequency */}
-            <div className="flex p-1 bg-slate-100 rounded-xl mb-8">
-              <button 
-                onClick={() => setFrequency("onetime")}
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        {/* Donation Amount Card */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+          <div className="px-8 pt-8 pb-4">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-primary-900 mb-6 text-center">Donation Amount</h2>
+
+            {/* Preset amount grid */}
+            <div className="grid grid-cols-3 gap-3 mb-4">
+              {PRESET_AMOUNTS.map(val => (
+                <button
+                  key={val}
+                  onClick={() => { setAmount(val); setIsCustom(false); setCustomAmount(""); }}
+                  className={cn(
+                    "py-5 rounded-2xl border-2 text-xl font-bold transition-all duration-150",
+                    !isCustom && amount === val
+                      ? "border-primary-700 bg-primary-50 text-primary-900 shadow-md scale-[1.03]"
+                      : "border-slate-200 text-slate-700 hover:border-primary-300 hover:bg-slate-50"
+                  )}
+                >
+                  £{val}
+                </button>
+              ))}
+              <button
+                onClick={() => { setIsCustom(true); setAmount(null); }}
                 className={cn(
-                  "flex-1 py-3 text-xs font-bold uppercase tracking-widest rounded-lg transition",
-                  frequency === "onetime" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  "py-5 rounded-2xl border-2 text-base font-bold transition-all duration-150",
+                  isCustom
+                    ? "border-primary-700 bg-primary-50 text-primary-900 shadow-md scale-[1.03]"
+                    : "border-slate-200 text-slate-600 hover:border-primary-300 hover:bg-slate-50"
                 )}
               >
-                One-Time
-              </button>
-              <button 
-                onClick={() => setFrequency("monthly")}
-                className={cn(
-                  "flex-1 py-3 text-xs font-bold uppercase tracking-widest rounded-lg transition",
-                  frequency === "monthly" ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
-                )}
-              >
-                Monthly
+                Custom
               </button>
             </div>
 
-            {/* Amount Selection */}
-            <div className="mb-6">
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">Select Amount (GBP)</label>
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                {predefinedAmounts.map(val => (
-                  <button
-                    key={val}
-                    onClick={() => { setAmount(val); setCustomAmount(""); }}
-                    className={cn(
-                      "py-3 rounded-xl border text-sm font-mono font-medium transition",
-                      amount === val 
-                        ? "border-primary-500 bg-primary-50 text-primary-800 shadow-sm" 
-                        : "border-slate-200 text-slate-600 hover:border-primary-200 hover:bg-slate-50"
-                    )}
-                  >
-                    £{val}
-                  </button>
-                ))}
-              </div>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-mono">£</span>
-                <input 
+            {/* Custom amount input */}
+            {isCustom && (
+              <div className="relative mb-4">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-mono text-lg font-bold">£</span>
+                <input
                   type="number"
-                  placeholder="Custom Amount"
+                  placeholder="Enter amount"
                   value={customAmount}
-                  onChange={(e) => {
-                    setCustomAmount(e.target.value);
-                    setAmount(null);
-                  }}
-                  className={cn(
-                    "w-full pl-8 pr-4 py-4 rounded-xl border text-sm font-mono transition outline-none",
-                    customAmount 
-                      ? "border-primary-500 bg-primary-50 text-primary-900 shadow-sm" 
-                      : "border-slate-200 focus:border-primary-500"
-                  )}
+                  onChange={(e) => setCustomAmount(e.target.value)}
+                  autoFocus
+                  className="w-full pl-10 pr-4 py-4 rounded-2xl border-2 border-primary-400 bg-primary-50 text-primary-900 font-mono text-lg outline-none focus:border-primary-600 transition"
                 />
               </div>
-            </div>
-
-            <div className="mb-8">
-              <label className="block text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">Where should this donation go?</label>
-              <select className="w-full px-4 py-4 rounded-xl border border-slate-200 focus:border-primary-500 outline-none text-sm text-slate-700 bg-white">
-                <option>General Mosque Fund (Sadaqah)</option>
-                <option>Mosque Expansion Project</option>
-                <option>Zakat Al-Mal (Eligible Funds)</option>
-                <option>Zakat Al-Fitr</option>
-                <option>Youth Programs & Education</option>
-              </select>
-            </div>
-
-            {/* Fake Payment Button / Success State */}
-            {isSuccess ? (
-              <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-8 text-center">
-                <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">Jazakallah Khair!</h3>
-                <p className="text-slate-600 text-sm mb-6">
-                  Thank you for your generous donation. Your support helps us maintain the mosque and serve the community.
-                </p>
-                <button 
-                  onClick={() => setIsSuccess(false)}
-                  className="mx-auto flex items-center text-[10px] font-bold uppercase tracking-widest text-emerald-700 hover:text-emerald-800 transition"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" /> Make another donation
-                </button>
-              </div>
-            ) : (
-              <>
-                <button 
-                  onClick={handleProcessPayment}
-                  disabled={isProcessing}
-                  className={cn(
-                    "w-full text-white text-xs font-bold uppercase tracking-widest py-4 rounded-xl shadow-lg flex items-center justify-center transition",
-                    isProcessing ? "bg-slate-700 cursor-not-allowed" : "bg-slate-900 hover:bg-slate-800"
-                  )}
-                >
-                  {isProcessing ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <Lock className="w-4 h-4 mr-2" />
-                      Process Payment
-                    </>
-                  )}
-                </button>
-                <p className="text-center text-[10px] uppercase font-bold tracking-widest text-slate-400 mt-4 flex items-center justify-center">
-                  <Lock className="w-3 h-3 mr-1" /> Secure Processing Simulated
-                </p>
-              </>
             )}
 
+            {/* Gift Aid */}
+            <label className="flex items-start gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl cursor-pointer hover:bg-emerald-100 transition mb-4">
+              <input
+                type="checkbox"
+                checked={giftAid}
+                onChange={e => setGiftAid(e.target.checked)}
+                className="mt-0.5 w-4 h-4 accent-emerald-600 shrink-0"
+              />
+              <div>
+                <span className="text-sm font-bold text-emerald-800 block">Add Gift Aid</span>
+                <span className="text-xs text-emerald-700">
+                  I am a UK taxpayer. The masjid can claim 25% Gift Aid on my donation at no extra cost to me.
+                  {giftAid && finalAmount > 0 && (
+                    <span className="font-bold"> (+£{giftAidBonus.toFixed(2)} from government)</span>
+                  )}
+                </span>
+              </div>
+            </label>
+
+            {/* Summary */}
+            {finalAmount > 0 && (
+              <div className="bg-slate-50 rounded-2xl p-4 mb-4 text-center">
+                <span className="text-3xl font-bold text-primary-900">£{finalAmount.toFixed(2)}</span>
+                {giftAid && (
+                  <div className="text-xs text-emerald-700 font-bold mt-1">
+                    + £{giftAidBonus.toFixed(2)} Gift Aid = £{(finalAmount + giftAidBonus).toFixed(2)} total benefit
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Info Side */}
-          <div className="md:w-1/3 bg-slate-900 rounded-2xl text-white p-8 flex flex-col justify-center relative overflow-hidden">
-             <div className="absolute inset-0 bg-gradient-to-b from-primary-900/30 to-transparent"></div>
-             <div className="relative z-10">
-              <h3 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-6">Why Donate?</h3>
-              <ul className="space-y-6">
-                <li className="flex items-start">
+          {/* Notice */}
+          <div className="px-8 pb-8">
+            <p className="text-[11px] text-slate-500 leading-relaxed text-center">
+              <span className="font-bold text-slate-700">Please Note:</span> There is a 1.69% transaction charge for all payments made. However, as a registered charity, we are able to claim 25% Gift Aid on all eligible donations which will cover the charges.
+            </p>
+          </div>
+        </div>
+
+        {/* Bank Transfer Details */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-6">
+          <div className="px-8 py-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Building2 className="w-5 h-5 text-primary-800" />
+              <h2 className="text-xs font-bold uppercase tracking-widest text-primary-900">Bank Transfer</h2>
+            </div>
+
+            <p className="text-sm text-slate-600 mb-5">
+              You can donate directly via bank transfer using the details below. Please use your name as the reference.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                { label: "Account Name", value: "Ellesmere Port Masjid & Islamic Centre", key: "name" },
+                { label: "Sort Code", value: "40-20-20", key: "sort" },
+                { label: "Account Number", value: "21463330", key: "acc" },
+                { label: "Bank", value: "HSBC", key: "bank" },
+              ].map(({ label, value, key }) => (
+                <div key={key} className="flex items-center justify-between bg-slate-50 rounded-2xl px-5 py-4">
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-0.5">{label}</div>
+                    <div className="font-mono font-bold text-slate-900 text-sm">{value}</div>
+                  </div>
+                  <button
+                    onClick={() => copyToClipboard(value, key)}
+                    className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-primary-700 hover:text-primary-900 transition"
+                  >
+                    {copied === key ? (
+                      <><CheckCircle2 className="w-4 h-4 text-emerald-600" /><span className="text-emerald-600">Copied</span></>
+                    ) : (
+                      <><Copy className="w-4 h-4" />Copy</>
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Why Donate */}
+        <div className="bg-primary-900 rounded-3xl text-white overflow-hidden">
+          <div className="px-8 py-8">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-5">Why Donate?</h3>
+            <ul className="space-y-4">
+              {[
+                "Maintain the daily operations, utilities, and upkeep of the masjid.",
+                "Fund youth education programmes, Quran classes, and weekly Islamic seminars.",
+                "Support our community food bank and welfare initiatives for families in need.",
+                "Help with ongoing building projects and future expansion of the centre.",
+              ].map((item, i) => (
+                <li key={i} className="flex items-start">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-3 shrink-0 mt-0.5" />
-                  <span className="text-xs text-slate-300 leading-relaxed">Maintain the daily operations, utilities, and cleanliness of the house of Allah.</span>
+                  <span className="text-sm text-slate-300 leading-relaxed">{item}</span>
                 </li>
-                <li className="flex items-start">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-3 shrink-0 mt-0.5" />
-                  <span className="text-xs text-slate-300 leading-relaxed">Fund youth mentorship programs, classes, and weekly educational seminars.</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mr-3 shrink-0 mt-0.5" />
-                  <span className="text-xs text-slate-300 leading-relaxed">Support our community food bank and interfaith neighborhood outreach initiatives.</span>
-                </li>
-              </ul>
-              <div className="mt-8 pt-8 border-t border-white/10 text-[10px] text-slate-400">
-                Ellesmere Port Mosque is a registered charity in the UK (Charity Number 1234567). Contact us at donations@ellesmereportmosque.org for tax gift aid receipts.
-              </div>
+              ))}
+            </ul>
+
+            <div className="mt-8 pt-6 border-t border-white/10 text-xs text-slate-400 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <span>Registered Charity No. <span className="font-bold text-white">1195799</span></span>
+              <span>Contact: <span className="text-amber-400">masjidellesmereport@gmail.com</span></span>
             </div>
           </div>
         </div>
